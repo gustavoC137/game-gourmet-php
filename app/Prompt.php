@@ -21,8 +21,6 @@ class Prompt
             $propertyTreeNodeArr['children'][0]['children'])
         ];
 
-        $children[0]->addChild(new PropertyTreeNode('fitro', []));
-
         $this->propertyTreeNode = new PropertyTreeNode(
             $propertyTreeNodeArr['property'],
             $children

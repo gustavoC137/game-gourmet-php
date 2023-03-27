@@ -1,7 +1,7 @@
 # Simple Api Rest
-Simple example of a REST API with Laravel 10.x
+Simple guess the dish game implementing a tree data structure
 
-### Build and Start the API on port 8000
+### Get a image of php-fpm:8.2.4
 
 ```
 $ docker-compose up -d 
