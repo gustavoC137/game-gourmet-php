@@ -8,5 +8,5 @@ $ docker-compose up -d
 ```
 ### Run the game
 ```
-$ docker-compose exec php-fpm php myapp/gameGourmet.php
+$ docker-compose exec php-fpm php app/gameGourmet.php
 ```
