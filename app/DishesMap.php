@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 class DishesMap
 {
     public array $dishes;

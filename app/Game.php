@@ -1,8 +1,9 @@
 <?php
-class Prompt
+
+namespace App;
+class Game
 {
     public int $count = 1;
-    public bool $prompting = true;
     public string $input;
     public string $dishFound;
     public string $dishYouThouthName;

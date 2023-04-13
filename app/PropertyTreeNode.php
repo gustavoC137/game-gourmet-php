@@ -1,5 +1,6 @@
 <?php
 
+namespace App;
 class PropertyTreeNode
 {
     public string $property;

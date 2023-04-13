@@ -1,7 +1,9 @@
 version: '2'
 
 services:
-  php-fpm:
-    image: bitnami/php-fpm:8.2.4
+  game-gourmet:
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - .:/app

@@ -1,4 +1,6 @@
 <?php
+
+namespace App;
 class Dish {
     public string $name;
     public string $key;
