@@ -2,9 +2,11 @@
 require __DIR__.'/vendor/autoload.php';
 
 use App\Game;
+use App\UserDialogCLIBasic;
 
 $dishesArr = require "app/dishesDefault.php";
 $propertyTreeNodeArr = require "app/propertyTreeNodeDefault.php";
 
-$prompt = new Game(9, $dishesArr, $propertyTreeNodeArr);
-$prompt->start();
+$userDialog = new UserDialogCLIBasic();
+$game = new Game($userDialog, $dishesArr, $propertyTreeNodeArr);
+$game->start();

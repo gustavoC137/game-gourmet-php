@@ -3,8 +3,7 @@
 namespace App;
 class Game
 {
-    public int $count = 1;
-    public string $input;
+    public UserDialogInterface $dialogUser;
     public string $dishFound;
     public string $dishYouThouthName;
     public string $dishYouThouthProperty;
@@ -13,8 +12,8 @@ class Game
     public DishesMap $dishesMap;
     public PropertyTreeNode $propertyTreeNode;
     public string $dishKey;
-    public function __construct($count, $dishesMapArr = [], $propertyTreeNodeArr = []) {
-        $this->count = $count;
+    public function __construct($dialogUser, $dishesMapArr = [], $propertyTreeNodeArr = []) {
+        $this->dialogUser = $dialogUser;
         $this->dishesMap = new DishesMap($dishesMapArr);
 
         $children = [new PropertyTreeNode(
@@ -30,25 +29,21 @@ class Game
 
     public function thinkOfaDish(): void
     {
-        echo "Pense em um prato que gosta...";
-        $this->input = readline();
+        $this->dialogUser->thinkOfaDish();
     }
 
     public function wtDishDYouThink()
     {
-        echo "Qual prato você pensou? \n\n";
-        $this->dishYouThouthName = readline();
+        $this->dishYouThouthName = $this->dialogUser->askWhichDish();
 
-        echo "$this->dishYouThouthName é__________ mas $this->dishFound não? \n\n";
-        $this->dishYouThouthProperty = readline();
+        $this->dishYouThouthProperty = $this->dialogUser->askExclusiveProperty($this->dishYouThouthName, $this->dishFound);
     }
 
     public function askForDishFound(PropertyTreeNode $node) {
         $this->dishFound = $this->dishesMap->getDish($this->dishKey);
-        echo "O prato que você pensou é " . $this->dishFound . "? (S/N) \n\n";
 
-        if ($this->confirm()) {
-            echo "Acertei de novo! \n\n";
+        if ($this->dialogUser->askIfDishIsThis($this->dishFound)) {
+            $this->dialogUser->celebratesSuccess();
         } else {
             $this->wtDishDYouThink();
             $this->dishesMap->addDish(new Dish($this->dishYouThouthName, "$this->dishKey.$this->dishYouThouthProperty"));
@@ -61,9 +56,7 @@ class Game
     {
         if ($node->children) {
             foreach ($node->children as $child) {
-                echo "O prato que você pensou é $child->property?(S/N) \n\n";
-
-                if ($this->confirm()) {
+                if ($this->dialogUser->askIfDishHasProperty($child->property)) {
                     $this->dishKey .= ".$child->property";
                     $this->dishHasThisProperty($child);
                     return;
@@ -73,21 +66,12 @@ class Game
         $this->askForDishFound($node);
     }
 
-    public function confirm(): bool
-    {
-        $this->input = strtoupper(readline());
-        if ($this->input === "S") {
-            return true;
-        }
-        return false;
-    }
-
     /**
      * @return void
      */
     public function start(): void
     {
-        echo "Bem-vindo à Jogo  Gourmet! \n\n";
+        $this->dialogUser->welCome();
         
         $this->thinkOfaDish();
         $this->dishKey = $this->propertyTreeNode->property;
